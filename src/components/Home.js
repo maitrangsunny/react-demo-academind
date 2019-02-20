@@ -5,7 +5,8 @@ export class Home extends Component {
         super(props);
         this.state = {
             age: props.age,
-            status: 0
+            status: 0,
+            homeLink: props.initialValue
         }
         setTimeout(()=>{
             this.setState({
@@ -16,10 +17,17 @@ export class Home extends Component {
     add(){
         this.setState({
             age: this.state.age+3
-        })
+        });
+    }
+    changeLink(){
+        this.props.changeLink(this.state.homeLink);
+    }
+    handleChange(e){
+        this.setState({
+            homeLink : e.target.value
+        });
     }
     render(){
-        console.log(this.props);
         return(
            <div>
                <h1>This is a homepage</h1>
@@ -28,6 +36,13 @@ export class Home extends Component {
                {this.props.children}
                {this.state.status}
                <button onClick = {()=>this.add()}>Add Three</button>
+               <button onClick = {this.props.greet}>Greet</button>
+               <input 
+                    type="text" 
+                    value={this.state.homeLink}
+                    onChange={(e)=>{this.handleChange(e)}} />
+               <button onClick={this.changeLink.bind(this)}>Change Link</button>
+               
            </div>
         )
     }
